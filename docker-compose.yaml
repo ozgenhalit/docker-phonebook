@@ -1,9 +1,8 @@
 version: "3.7"
 
 services:
-
-   database:
-      image: mysql:5.7
+    database:
+        image: mysql:5.7
         environment:
             MYSQL_ROOT_PASSWORD: P123456p
             MYSQL_DATABASE: phonebook_db
@@ -16,8 +15,7 @@ services:
               target: /docker-entrypoint-initdb.d/init.sql
         networks:
             - clarusnet
-
-   app-server:
+    app-server:
         env_file: .env
         image: "${ECR_REPO}:latest"
         deploy:
@@ -27,17 +25,16 @@ services:
                 delay: 5s
                 order: start-first
         ports:
-          - "80-80"
+            - "80:80"
         networks:
-          - clarusnet
+            - clarusnet
 networks:
-    clarusnet: 
+    clarusnet:
         driver: overlay
 
 volumes:
     db-data:
 
-
-config:
+configs:
     table:
         file: ./init.sql
